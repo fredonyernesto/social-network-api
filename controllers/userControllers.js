@@ -70,7 +70,7 @@ module.exports = {
     // Delete a user along with their thoughts
     async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndRemove({ _id: req.params.userId });
+            const user = await User.findOneAndDelete({ _id: req.params.userId });
     
             if (!user) {
                 return res.status(404).json({ message: 'No user with this ID' });
@@ -91,14 +91,17 @@ module.exports = {
         try {
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $addToSet: { friends: req.params.friendId } },  
+                { $addToSet: { friends: req.params.friendsId } },  
                 { runValidators: true, new: true }
             );
     
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this ID' });
             }
-    
+
+
+            
+            const friends = await User.findOneAndUpda
             res.json(user);
         } catch (err) {
             console.log(err);
@@ -117,7 +120,8 @@ module.exports = {
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this ID' });
             }
-    
+
+           
             res.json(user);
         } catch (err) {
             console.log(err);
