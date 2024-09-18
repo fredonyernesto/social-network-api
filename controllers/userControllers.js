@@ -99,9 +99,6 @@ module.exports = {
                 return res.status(404).json({ message: 'No user found with this ID' });
             }
 
-
-            
-            const friends = await User.findOneAndUpda
             res.json(user);
         } catch (err) {
             console.log(err);
